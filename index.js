@@ -1,17 +1,32 @@
+$(document).ready(function() {
 
-$('#js-shopping-list-form').submit(function(e){
+$('#js-shopping-list-form').submit(function(event){
+   
 
-    let text = $('#shopping-list-entry').val();
-    let newListItem = $('<li><span></span></li>').text(text).addClass('shopping-item');
-    let btns = $('<div class="shopping-item-controls"><button class="shopping-item-toggle">Check<button><button class="shopping-item-delete">Delete<button></div>');
-
-
-    
-    $('ul.shopping-list').append(newListItem, btns);
-    
-  
+    $('.shopping-list').append(
+        '<li>' +
+            '<span class="shopping-item">'+ $('#shopping-list-entry').val() +'</span>' +
+            '<div class="shopping-item-controls">' +
+                '<button class="shopping-item-toggle">' +
+                    '<span class="button-label">check</span>' +
+                '</button>' +
+                '<button class="shopping-item-delete">' +
+                    '<span class="button-label">delete</span>' +
+                '</button>' +
+            '</div>' +
+        '</li>'
+    );
     $('#shopping-list-entry').val();
     $('#shopping-list-entry').val('');
-    
-    e.preventDefault();
+    event.preventDefault();
+    });
+
+    $('.shopping-list').on('click', '.shopping-item-delete', function(){
+        $(this).closest('li').remove();
+    });
+
+    $('.shopping-list').on('click', '.shopping-item-toggle', function(){
+        $(this).closest('li').find('.shopping-item').toggleClass('shopping-item__checked');
+    })
+
 });
